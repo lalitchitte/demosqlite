@@ -40,6 +40,7 @@ const Home = () => {
         [id],
         (tx, results) => {
           console.log('Results', results.rowsAffected);
+          getData();
           if (results.rowsAffected > 0) {
             Alert.alert(
               'Success',
@@ -47,9 +48,6 @@ const Home = () => {
               [
                 {
                   text: 'Ok',
-                  onPress: () => {
-                    getData();
-                  },
                 },
               ],
               {cancelable: false},
@@ -68,7 +66,7 @@ const Home = () => {
         data={userList}
         renderItem={({item, index}) => {
           return (
-            <TouchableOpacity style={styles.userItem}>
+            <View style={styles.userItem}>
               <Text style={styles.itemText}>{'Name: ' + item.name}</Text>
               <Text style={styles.itemText}>{'Email: ' + item.email}</Text>
               <Text style={styles.itemText}>{'Address: ' + item.address}</Text>
@@ -99,7 +97,7 @@ const Home = () => {
                   />
                 </TouchableOpacity>
               </View>
-            </TouchableOpacity>
+            </View>
           );
         }}
       />

@@ -19,31 +19,35 @@ const AddUser = () => {
 
   const saveUser = () => {
     console.log(name, email, address);
-    db.transaction(function (tx) {
-      tx.executeSql(
-        'INSERT INTO table_user (name, email, address) VALUES (?,?,?)',
-        [name, email, address],
-        (tx, results) => {
-          console.log('Results', results.rowsAffected);
-          if (results.rowsAffected > 0) {
-            Alert.alert(
-              'Success',
-              'You are Registered Successfully',
-              [
-                {
-                  text: 'Ok',
-                  onPress: () => navigation.navigate('Home'),
-                },
-              ],
-              {cancelable: false},
-            );
-          } else alert('Registration Failed');
-        },
-        error => {
-          console.log(error);
-        },
-      );
-    });
+    if (!name || !email || !address) {
+      alert('Please Fill the Details');
+    } else {
+      db.transaction(function (tx) {
+        tx.executeSql(
+          'INSERT INTO table_user (name, email, address) VALUES (?,?,?)',
+          [name, email, address],
+          (tx, results) => {
+            console.log('Results', results.rowsAffected);
+            if (results.rowsAffected > 0) {
+              Alert.alert(
+                'Success',
+                'You are Registered Successfully',
+                [
+                  {
+                    text: 'Ok',
+                    onPress: () => navigation.navigate('Home'),
+                  },
+                ],
+                {cancelable: false},
+              );
+            } else alert('Registration Failed');
+          },
+          error => {
+            console.log(error);
+          },
+        );
+      });
+    }
   };
   // 1. query,2.values inside array, 3.callback method for res
   useEffect(() => {
